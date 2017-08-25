@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# 简单的文件分发脚本
+
+NODE=(
+    hadoop@master
+    hadoop@slave1
+    hadoop@slave2
+)
+
+if [ $# != 2 ]
+    then
+        echo 'USAGE: '$0' FROM REMOTE'
+        exit 1
+fi
+
+for node in ${NODE[@]}
+do 
+scp $1 $node:$2
+rev=$?
+if [ $rev -eq 0 ]
+    then 
+        echo 'update success'
+    else
+        echo 'fail'
+fi
+done
